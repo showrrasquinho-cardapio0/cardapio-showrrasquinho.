@@ -1,324 +1,262 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Showrrasquinho - Cadastro e Pedido Online</title>
-  <style>
-    :root {
-      --primary-color: #e65100;
-      --primary-hover: #ef6c00;
-      --bg-color: #f4f4f9;
-      --card-bg: #ffffff;
-      --text-color: #333;
-      --border-color: #dddddd;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      background-color: var(--card-bg);
-      max-width: 600px;
-      width: 100%;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      text-align: center;
-      color: var(--primary-color);
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-    }
-
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      margin: 20px 0 10px;
-      border-bottom: 2px solid var(--primary-color);
-      padding-bottom: 5px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    input[type="text"],
-    input[type="tel"],
-    textarea,
-    select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    input[type="text"]:focus,
-    input[type="tel"]:focus,
-    textarea:focus,
-    select:focus {
-      border-color: var(--primary-color);
-    }
-
-    .checkbox-group, .radio-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 5px;
-    }
-
-    .option-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #fafafa;
-      padding: 10px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-    }
-
-    .option-item label {
-      margin-bottom: 0;
-      font-weight: normal;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-    }
-
-    .price-tag {
-      font-weight: bold;
-      color: var(--primary-color);
-      white-space: nowrap;
-    }
-
-    .summary-box {
-      background-color: #fff8e1;
-      border: 1px solid #ffe082;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 20px;
-      text-align: right;
-    }
-
-    .total-price {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: var(--primary-color);
-    }
-
-    button {
-      width: 100%;
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 6px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: background-color 0.2s;
-    }
-
-    button:hover {
-      background-color: var(--primary-hover);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital - Showrasquinho</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .bg-charcoal { background-color: #121212; }
+        .bg-card { background-color: #1e1e1e; }
+        .accent-orange { color: #f97316; }
+        .bg-accent-orange { background-color: #f97316; }
+    </style>
 </head>
-<body>
+<body class="bg-charcoal text-gray-100 min-h-screen pb-24">
 
-  <div class="container">
-    <h1>Showrrasquinho</h1>
-
-    <form id="orderForm">
-      <!-- Dados do Cliente -->
-      <div class="section-title">1. Dados do Cliente</div>
-      
-      <div class="form-group">
-        <label for="nome">Nome Completo *</label>
-        <input type="text" id="nome" required placeholder="Digite seu nome">
-      </div>
-
-      <div class="form-group">
-        <label for="whatsapp">WhatsApp / Telefone *</label>
-        <input type="tel" id="whatsapp" required placeholder="(00) 00000-0000">
-      </div>
-
-      <div class="form-group">
-        <label for="endereco">Endereço de Entrega (Rua, Nº, Bairro) *</label>
-        <textarea id="endereco" rows="2" required placeholder="Digite o endereço completo"></textarea>
-      </div>
-
-      <!-- Seleção de Produtos principais -->
-      <div class="section-title">2. Escolha o Produto Principal</div>
-      
-      <div class="radio-group">
-        <div class="option-item">
-          <label>
-            <input type="radio" name="produto" value="Opção Tradicional" data-price="18.00" checked onchange="calcularTotal()">
-            Opção Tradicional
-          </label>
-          <span class="price-tag">R$ 18,00</span>
+    <!-- Header / Banner -->
+    <header class="relative bg-gradient-to-b from-orange-900 to-zinc-900 pt-8 pb-6 px-4 text-center border-b border-orange-500/20">
+        <div class="max-w-md mx-auto">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-500 text-white rounded-full text-3xl shadow-lg shadow-orange-500/30 mb-2">
+                <i class="fa-solid fa-drumstick-bite"></i>
+            </div>
+            <h1 class="text-3xl font-extrabold tracking-tight text-white uppercase">SHOWRASQUINHO</h1>
+            <p class="text-orange-400 font-medium text-sm mt-1">Sabor de verdade, entregue quentinho!</p>
+            
+            <div class="flex justify-center gap-4 mt-4 text-xs text-gray-300">
+                <span class="flex items-center gap-1"><i class="fa-solid fa-motorcycle text-orange-400"></i> Delivery Rápido</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-location-dot text-orange-400"></i> Rio Bonito</span>
+            </div>
         </div>
-        <div class="option-item">
-          <label>
-            <input type="radio" name="produto" value="Opção Especial" data-price="25.00" onchange="calcularTotal()">
-            Opção Especial
-          </label>
-          <span class="price-tag">R$ 25,00</span>
+    </header>
+
+    <!-- Menu Container -->
+    <main class="max-w-md mx-auto px-4 py-6 space-y-8">
+
+        <!-- Categoria: Espetinhos -->
+        <section>
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-fire text-orange-500 text-xl"></i>
+                <h2 class="text-xl font-bold uppercase tracking-wide text-white">Espetinhos Suculentos</h2>
+            </div>
+
+            <div class="space-y-3">
+                <!-- Item 1 -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Carne Premium</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Corte nobre macio e temperado no ponto certo</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 12,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('espetinho_carne', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-espetinho_carne" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('espetinho_carne', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Sobrecoxa Desossada</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Frango suculento e douradinho na brasa</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 10,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('espetinho_sobrecoxa', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-espetinho_sobrecoxa" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('espetinho_sobrecoxa', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Misto Especial</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Combinação de Carne, Linguiça e Frango</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 11,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('espetinho_misto', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-espetinho_misto" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('espetinho_misto', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Coração de Galinha</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Clássico do churrasco muito bem temperado</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 10,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('espetinho_coracao', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-espetinho_coracao" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('espetinho_coracao', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Frango com Bacon</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Medalhões de frango envolvidos em bacon crocante</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 12,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('espetinho_frango_bacon', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-espetinho_frango_bacon" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('espetinho_frango_bacon', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categoria: Acompanhamentos -->
+        <section>
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-utensils text-orange-500 text-xl"></i>
+                <h2 class="text-xl font-bold uppercase tracking-wide text-white">Acompanhamentos</h2>
+            </div>
+
+            <div class="space-y-3">
+                <!-- Acomp 1 -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Farofa Caseira</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Crocante, temperadinha e deliciosa</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 6,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('acomp_farofa', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-acomp_farofa" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('acomp_farofa', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+
+                <!-- Acomp 2 -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Arroz Branquinho</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Soltinho e feito na hora</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 6,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('acomp_arroz', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-acomp_arroz" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('acomp_arroz', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+
+                <!-- Acomp 3 -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Vinagrete Fresco</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Tomate, cebola e tempero especial</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 6,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('acomp_vinagrete', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-acomp_vinagrete" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('acomp_vinagrete', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+
+                <!-- Acomp 4 -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Salpicão Cremoso</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Frango desfiado, maionese e batata palha</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 8,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('acomp_salpicao', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-acomp_salpicao" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('acomp_salpicao', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Informações Adicionais / Redes -->
+        <section class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 text-center space-y-2 text-xs text-gray-400">
+            <p><i class="fa-brands font-bold text-orange-400 fa-instagram"></i> @Showrrasquinho_RB</p>
+            <p><i class="fa-solid font-bold text-red-500 fa-store"></i> iFood: Showrrasquinho</p>
+        </section>
+
+    </main>
+
+    <!-- Fixed Bottom Cart Bar -->
+    <div class="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t border-zinc-800 p-4 shadow-2xl z-50">
+        <div class="max-w-md mx-auto flex items-center justify-between gap-4">
+            <div>
+                <span class="text-xs text-gray-400 uppercase font-medium block">Total Estimado</span>
+                <span id="total-price" class="text-xl font-extrabold text-orange-400">R$ 0,00</span>
+            </div>
+            <button onclick="sendOrderWhatsApp()" class="flex-1 bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-green-600/30 transition">
+                <i class="fa-brands fa-whatsapp text-xl"></i>
+                <span>Enviar Pedido</span>
+            </button>
         </div>
-        <div class="option-item">
-          <label>
-            <input type="radio" name="produto" value="Combo Completo" data-price="32.00" onchange="calcularTotal()">
-            Combo Completo
-          </label>
-          <span class="price-tag">R$ 32,00</span>
-        </div>
-      </div>
+    </div>
 
-      <!-- Adicionais -->
-      <div class="section-title">3. Adicionais & Opcionais</div>
-      
-      <div class="checkbox-group">
-        <div class="option-item">
-          <label>
-            <input type="checkbox" name="adicional" value="Molho Especial" data-price="3.00" onchange="calcularTotal()">
-            Molho Especial Extra
-          </label>
-          <span class="price-tag">+ R$ 3,00</span>
-        </div>
-        <div class="option-item">
-          <label>
-            <input type="checkbox" name="adicional" value="Queijo Extra" data-price="4.50" onchange="calcularTotal()">
-            Queijo Extra
-          </label>
-          <span class="price-tag">+ R$ 4,50</span>
-        </div>
-        <div class="option-item">
-          <label>
-            <input type="checkbox" name="adicional" value="Bacon Extra" data-price="5.00" onchange="calcularTotal()">
-            Bacon Extra
-          </label>
-          <span class="price-tag">+ R$ 5,00</span>
-        </div>
-        <div class="option-item">
-          <label>
-            <input type="checkbox" name="adicional" value="Bebida 350ml" data-price="6.00" onchange="calcularTotal()">
-            Bebida 350ml
-          </label>
-          <span class="price-tag">+ R$ 6,00</span>
-        </div>
-      </div>
+    <!-- Script de Funcionalidade do Carrinho -->
+    <script>
+        const items = {
+            espetinho_carne: { name: "Espetinho Carne Premium", price: 12.00, qty: 0 },
+            espetinho_sobrecoxa: { name: "Espetinho Sobrecoxa Desossada", price: 10.00, qty: 0 },
+            espetinho_misto: { name: "Espetinho Misto", price: 11.00, qty: 0 },
+            espetinho_coracao: { name: "Espetinho Coração", price: 10.00, qty: 0 },
+            espetinho_frango_bacon: { name: "Espetinho Frango c/ Bacon", price: 12.00, qty: 0 },
+            acomp_farofa: { name: "Farofa Caseira", price: 6.00, qty: 0 },
+            acomp_arroz: { name: "Arroz Branquinho", price: 6.00, qty: 0 },
+            acomp_vinagrete: { name: "Vinagrete Fresco", price: 6.00, qty: 0 },
+            acomp_salpicao: { name: "Salpicão Cremoso", price: 8.00, qty: 0 }
+        };
 
-      <!-- Forma de Pagamento -->
-      <div class="section-title">4. Forma de Pagamento</div>
-      
-      <div class="form-group">
-        <select id="pagamento" required>
-          <option value="Pix">Pix</option>
-          <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
-          <option value="Dinheiro">Dinheiro</option>
-        </select>
-      </div>
+        function updateQty(id, delta) {
+            if (items[id].qty + delta >= 0) {
+                items[id].qty += delta;
+                document.getElementById(qty-${id}).innerText = items[id].qty;
+                calculateTotal();
+            }
+        }
 
-      <div class="form-group">
-        <label for="observacoes">Observações</label>
-        <textarea id="observacoes" rows="2" placeholder="Ex: Retirar cebola, ponto da carne, troco para 50, etc."></textarea>
-      </div>
+        function calculateTotal() {
+            let total = 0;
+            for (let key in items) {
+                total += items[key].price * items[key].qty;
+            }
+            document.getElementById('total-price').innerText = R$ ${total.toFixed(2).replace('.', ',')};
+        }
 
-      <!-- Resumo do Total -->
-      <div class="summary-box">
-        <span>Valor Total:</span>
-        <div class="total-price" id="totalDisplay">R$ 18,00</div>
-      </div>
+        function sendOrderWhatsApp() {
+            let selectedItems = [];
+            let total = 0;
 
-      <button type="button" onclick="enviarPedido()">Enviar Pedido via WhatsApp</button>
-    </form>
-  </div>
+            for (let key in items) {
+                if (items[key].qty > 0) {
+                    selectedItems.push(- ${items[key].qty}x ${items[key].name} (R$ ${(items[key].price * items[key].qty).toFixed(2).replace('.', ',')}));
+                    total += items[key].price * items[key].qty;
+                }
+            }
 
-  <script>
-    const SEU_NUMERO_WHATSAPP = "5521971346497";
+            if (selectedItems.length === 0) {
+                alert("Por favor, selecione ao menos um item no cardápio antes de enviar!");
+                return;
+            }
 
-    function calcularTotal() {
-      let total = 0;
+            let message = *Olá, Showrasquinho! Gostaria de fazer o seguinte pedido:*\n\n;
+            message += selectedItems.join('\n') + \n\n;
+            message += *Total estimado:* R$ ${total.toFixed(2).replace('.', ',')}\n\n;
+            message += Por favor, me informe a taxa de entrega e o tempo estimado!;
 
-      const produtoSelecionado = document.querySelector('input[name="produto"]:checked');
-      if (produtoSelecionado) {
-        total += parseFloat(produtoSelecionado.getAttribute('data-price'));
-      }
-
-      const adicionais = document.querySelectorAll('input[name="adicional"]:checked');
-      adicionais.forEach(item => {
-        total += parseFloat(item.getAttribute('data-price'));
-      });
-
-      document.getElementById('totalDisplay').innerText = R$ ${total.toFixed(2).replace('.', ',')};
-      return total;
-    }
-
-    function enviarPedido() {
-      const nome = document.getElementById('nome').value.trim();
-      const whatsapp = document.getElementById('whatsapp').value.trim();
-      const endereco = document.getElementById('endereco').value.trim();
-      const pagamento = document.getElementById('pagamento').value;
-      const observacoes = document.getElementById('observacoes').value.trim();
-
-      if (!nome || !whatsapp || !endereco) {
-        alert('Por favor, preencha todos os campos obrigatórios (Nome, WhatsApp e Endereço).');
-        return;
-      }
-
-      const produtoSelecionado = document.querySelector('input[name="produto"]:checked').value;
-      
-      const adicionaisMarcados = [];
-      document.querySelectorAll('input[name="adicional"]:checked').forEach(item => {
-        adicionaisMarcados.push(item.value);
-      });
-
-      const total = calcularTotal().toFixed(2).replace('.', ',');
-
-      let mensagem = *NOVO PEDIDO DIGITAL - SHOWRRASQUINHO*\n\n;
-      mensagem += *Cliente:* ${nome}\n;
-      mensagem += *Contato:* ${whatsapp}\n;
-      mensagem += *Endereço:* ${endereco}\n\n;
-      mensagem += *Item Principal:* ${produtoSelecionado}\n;
-      mensagem += *Adicionais:* ${adicionaisMarcados.length > 0 ? adicionaisMarcados.join(', ') : 'Nenhum'}\n;
-      mensagem += *Forma de Pagamento:* ${pagamento}\n;
-      if (observacoes) {
-        mensagem += *Observações:* ${observacoes}\n;
-      }
-      mensagem += \n*TOTAL:* R$ ${total};
-
-      const url = https://api.whatsapp.com/send?phone=${SEU_NUMERO_WHATSAPP}&text=${encodeURIComponent(mensagem)};
-      window.open(url, '_blank');
-    }
-  </script>
+            const encodedMessage = encodeURIComponent(message);
+            window.open(https://api.whatsapp.com/send?phone=5521971346497&text=${encodedMessage}, '_blank');
+        }
+    </script>
 </body>
