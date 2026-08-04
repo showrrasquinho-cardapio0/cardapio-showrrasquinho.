@@ -35,7 +35,43 @@
 
     <!-- Menu Container -->
     <main class="max-w-md mx-auto px-4 py-6 space-y-8">
+<!-- Categoria: Escolha a Janta (Agora no Topo) -->
+        <section>
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-bowl-food text-orange-500 text-xl"></i>
+                <h2 class="text-xl font-bold uppercase tracking-wide text-white">Escolha a Janta</h2>
+            </div>
 
+            <div class="space-y-3">
+                <!-- Janta Pequena -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Janta Pequena</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Acompanha: arroz, molho, farofa, salpicão</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 16,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('janta_pequena', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-janta_pequena" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('janta_pequena', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+
+                <!-- Janta Grande -->
+                <div class="bg-card p-4 rounded-xl border border-zinc-800 flex justify-between items-center shadow-md">
+                    <div>
+                        <h3 class="font-bold text-base text-gray-100">Janta Grande</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Acompanha: arroz, molho, farofa, salpicão</p>
+                        <span class="text-orange-400 font-bold text-sm mt-2 inline-block">R$ 20,00</span>
+                    </div>
+                    <div class="flex items-center gap-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+                        <button onclick="updateQty('janta_grande', -1)" class="w-7 h-7 flex items-center justify-center bg-zinc-700 hover:bg-zinc-600 rounded text-white font-bold">-</button>
+                        <span id="qty-janta_grande" class="w-6 text-center text-sm font-bold">0</span>
+                        <button onclick="updateQty('janta_grande', 1)" class="w-7 h-7 flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded text-white font-bold">+</button>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Categoria: Espetinhos -->
         <section>
             <div class="flex items-center gap-2 mb-4">
@@ -115,31 +151,7 @@
                 </div>
             </div>
         </section>
-<div class="section-title">Escolha a Janta</div>
-
-<div class="radio-group">
-  <div class="option-item">
-    <label>
-      <div class="option-main">
-        <input type="radio" name="produto" value="Janta Pequeno" data-price="16.00" checked onchange="calcularTotal()">
-        <span>Janta Pequeno</span>
-      </div>
-      <span class="option-desc">Acompanha: arroz, molho, farofa, salpicão</span>
-    </label>
-    <span class="price-tag">R$ 16,00</span>
-  </div>
-
-  <div class="option-item">
-    <label>
-      <div class="option-main">
-        <input type="radio" name="produto" value="Janta Grande" data-price="20.00" onchange="calcularTotal()">
-        <span>Janta Grande</span>
-      </div>
-      <span class="option-desc">Acompanha: arroz, molho, farofa, salpicão</span>
-    </label>
-    <span class="price-tag">R$ 20,00</span>
-  </div>
-</div>
+      
         <!-- Categoria: Acompanhamentos -->
         <section>
             <div class="flex items-center gap-2 mb-4">
@@ -231,6 +243,8 @@
     <!-- Script de Funcionalidade do Carrinho -->
     <script>
         const items = {
+            janta_pequena: { name: "Janta Pequena", price: 16.00, qty: 0 },
+            janta_grande: { name: "Janta Grande", price: 20.00, qty: 0 },
             espetinho_carne: { name: "Espetinho Carne Premium", price: 12.00, qty: 0 },
             espetinho_sobrecoxa: { name: "Espetinho Sobrecoxa Desossada", price: 12.00, qty: 0 },
             espetinho_misto: { name: "Espetinho Misto", price: 12.00, qty: 0 },
