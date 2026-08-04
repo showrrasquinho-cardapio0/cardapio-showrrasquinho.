@@ -115,7 +115,31 @@
                 </div>
             </div>
         </section>
+<div class="section-title">Escolha a Janta</div>
 
+<div class="radio-group">
+  <div class="option-item">
+    <label>
+      <div class="option-main">
+        <input type="radio" name="produto" value="Janta Pequeno" data-price="16.00" checked onchange="calcularTotal()">
+        <span>Janta Pequeno</span>
+      </div>
+      <span class="option-desc">Acompanha: arroz, molho, farofa, salpicão</span>
+    </label>
+    <span class="price-tag">R$ 16,00</span>
+  </div>
+
+  <div class="option-item">
+    <label>
+      <div class="option-main">
+        <input type="radio" name="produto" value="Janta Grande" data-price="20.00" onchange="calcularTotal()">
+        <span>Janta Grande</span>
+      </div>
+      <span class="option-desc">Acompanha: arroz, molho, farofa, salpicão</span>
+    </label>
+    <span class="price-tag">R$ 20,00</span>
+  </div>
+</div>
         <!-- Categoria: Acompanhamentos -->
         <section>
             <div class="flex items-center gap-2 mb-4">
