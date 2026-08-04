@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Showrrasquinho - Cadastro e Pedido Online</title>
+  <style>
+    :root {
+      --primary-color: #e65100;
+      --primary-hover: #ef6c00;
+      --bg-color: #f4f4f9;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --border-color: #dddddd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      max-width: 600px;
+      width: 100%;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 20px 0 10px;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 5px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--primary-color);
+    }
+
+    .checkbox-group, .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fafafa;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .option-item label {
+      margin-bottom: 0;
+      font-weight: normal;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .price-tag {
+      font-weight: bold;
+      color: var(--primary-color);
+      white-space: nowrap;
+    }
+
+    .summary-box {
+      background-color: #fff8e1;
+      border: 1px solid #ffe082;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .total-price {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Showrrasquinho</h1>
+
+    <form id="orderForm">
+      <!-- Dados do Cliente -->
+      <div class="section-title">1. Dados do Cliente</div>
+      
+      <div class="form-group">
+        <label for="nome">Nome Completo *</label>
+        <input type="text" id="nome" required placeholder="Digite seu nome">
+      </div>
+
+      <div class="form-group">
+        <label for="whatsapp">WhatsApp / Telefone *</label>
+        <input type="tel" id="whatsapp" required placeholder="(00) 00000-0000">
+      </div>
+
+      <div class="form-group">
+        <label for="endereco">Endereço de Entrega (Rua, Nº, Bairro) *</label>
+        <textarea id="endereco" rows="2" required placeholder="Digite o endereço completo"></textarea>
+      </div>
+
+      <!-- Seleção de Produtos principais -->
+      <div class="section-title">2. Escolha o Produto Principal</div>
+      
+      <div class="radio-group">
+        <div class="option-item">
+          <label>
+            <input type="radio" name="produto" value="Opção Tradicional" data-price="18.00" checked onchange="calcularTotal()">
+            Opção Tradicional
+          </label>
+          <span class="price-tag">R$ 18,00</span>
+        </div>
+        <div class="option-item">
+          <label>
+            <input type="radio" name="produto" value="Opção Especial" data-price="25.00" onchange="calcularTotal()">
+            Opção Especial
+          </label>
+          <span class="price-tag">R$ 25,00</span>
+        </div>
+        <div class="option-item">
+          <label>
+            <input type="radio" name="produto" value="Combo Completo" data-price="32.00" onchange="calcularTotal()">
+            Combo Completo
+          </label>
+          <span class="price-tag">R$ 32,00</span>
+        </div>
+      </div>
+
+      <!-- Adicionais -->
+      <div class="section-title">3. Adicionais & Opcionais</div>
+      
+      <div class="checkbox-group">
+        <div class="option-item">
+          <label>
+            <input type="checkbox" name="adicional" value="Molho Especial" data-price="3.00" onchange="calcularTotal()">
+            Molho Especial Extra
+          </label>
+          <span class="price-tag">+ R$ 3,00</span>
+        </div>
+        <div class="option-item">
+          <label>
+            <input type="checkbox" name="adicional" value="Queijo Extra" data-price="4.50" onchange="calcularTotal()">
+            Queijo Extra
+          </label>
+          <span class="price-tag">+ R$ 4,50</span>
+        </div>
+        <div class="option-item">
+          <label>
+            <input type="checkbox" name="adicional" value="Bacon Extra" data-price="5.00" onchange="calcularTotal()">
+            Bacon Extra
+          </label>
+          <span class="price-tag">+ R$ 5,00</span>
+        </div>
+        <div class="option-item">
+          <label>
+            <input type="checkbox" name="adicional" value="Bebida 350ml" data-price="6.00" onchange="calcularTotal()">
+            Bebida 350ml
+          </label>
+          <span class="price-tag">+ R$ 6,00</span>
+        </div>
+      </div>
+
+      <!-- Forma de Pagamento -->
+      <div class="section-title">4. Forma de Pagamento</div>
+      
+      <div class="form-group">
+        <select id="pagamento" required>
+          <option value="Pix">Pix</option>
+          <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
+          <option value="Dinheiro">Dinheiro</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="observacoes">Observações</label>
+        <textarea id="observacoes" rows="2" placeholder="Ex: Retirar cebola, ponto da carne, troco para 50, etc."></textarea>
+      </div>
+
+      <!-- Resumo do Total -->
+      <div class="summary-box">
+        <span>Valor Total:</span>
+        <div class="total-price" id="totalDisplay">R$ 18,00</div>
+      </div>
+
+      <button type="button" onclick="enviarPedido()">Enviar Pedido via WhatsApp</button>
+    </form>
+  </div>
+
+  <script>
+    const SEU_NUMERO_WHATSAPP = "5521971346497";
+
+    function calcularTotal() {
+      let total = 0;
+
+      const produtoSelecionado = document.querySelector('input[name="produto"]:checked');
+      if (produtoSelecionado) {
+        total += parseFloat(produtoSelecionado.getAttribute('data-price'));
+      }
+
+      const adicionais = document.querySelectorAll('input[name="adicional"]:checked');
+      adicionais.forEach(item => {
+        total += parseFloat(item.getAttribute('data-price'));
+      });
+
+      document.getElementById('totalDisplay').innerText = R$ ${total.toFixed(2).replace('.', ',')};
+      return total;
+    }
+
+    function enviarPedido() {
+      const nome = document.getElementById('nome').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+      const endereco = document.getElementById('endereco').value.trim();
+      const pagamento = document.getElementById('pagamento').value;
+      const observacoes = document.getElementById('observacoes').value.trim();
+
+      if (!nome || !whatsapp || !endereco) {
+        alert('Por favor, preencha todos os campos obrigatórios (Nome, WhatsApp e Endereço).');
+        return;
+      }
+
+      const produtoSelecionado = document.querySelector('input[name="produto"]:checked').value;
+      
+      const adicionaisMarcados = [];
+      document.querySelectorAll('input[name="adicional"]:checked').forEach(item => {
+        adicionaisMarcados.push(item.value);
+      });
+
+      const total = calcularTotal().toFixed(2).replace('.', ',');
+
+      let mensagem = *NOVO PEDIDO DIGITAL - SHOWRRASQUINHO*\n\n;
+      mensagem += *Cliente:* ${nome}\n;
+      mensagem += *Contato:* ${whatsapp}\n;
+      mensagem += *Endereço:* ${endereco}\n\n;
+      mensagem += *Item Principal:* ${produtoSelecionado}\n;
+      mensagem += *Adicionais:* ${adicionaisMarcados.length > 0 ? adicionaisMarcados.join(', ') : 'Nenhum'}\n;
+      mensagem += *Forma de Pagamento:* ${pagamento}\n;
+      if (observacoes) {
+        mensagem += *Observações:* ${observacoes}\n;
+      }
+      mensagem += \n*TOTAL:* R$ ${total};
+
+      const url = https://api.whatsapp.com/send?phone=${SEU_NUMERO_WHATSAPP}&text=${encodeURIComponent(mensagem)};
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
