@@ -243,59 +243,65 @@
     <!-- Script de Funcionalidade do Carrinho -->
     <script>
         const items = {
-            janta_pequena: { name: "Janta Pequena", price: 16.00, qty: 0 },
-            janta_grande: { name: "Janta Grande", price: 20.00, qty: 0 },
-            espetinho_carne: { name: "Espetinho Carne Premium", price: 12.00, qty: 0 },
-            espetinho_sobrecoxa: { name: "Espetinho Sobrecoxa Desossada", price: 12.00, qty: 0 },
-            espetinho_misto: { name: "Espetinho Misto", price: 12.00, qty: 0 },
-            espetinho_coracao: { name: "Espetinho Coração", price: 12.00, qty: 0 },
-            espetinho_frango_bacon: { name: "Espetinho Frango c/ Bacon", price: 12.00, qty: 0 },
-            acomp_farofa: { name: "Farofa Caseira", price: 5.00, qty: 0 },
-            acomp_arroz: { name: "Arroz Branquinho", price: 5.00, qty: 0 },
-            acomp_vinagrete: { name: "Vinagrete Fresco", price: 5.00, qty: 0 },
-            acomp_salpicao: { name: "Salpicão Cremoso", price: 7.00, qty: 0 }
-        };
+    janta_pequena: { name: "Janta Pequena", price: 16.00, qty: 0 },
+    janta_grande: { name: "Janta Grande", price: 20.00, qty: 0 },
+    espetinho_carne: { name: "Espetinho Carne Premium", price: 12.00, qty: 0 },
+    espetinho_sobrecoxa: { name: "Espetinho Sobrecoxa Desossada", price: 12.00, qty: 0 },
+    espetinho_misto: { name: "Espetinho Misto", price: 12.00, qty: 0 },
+    espetinho_coracao: { name: "Espetinho Coração", price: 12.00, qty: 0 },
+    espetinho_frango_bacon: { name: "Espetinho Frango c/ Bacon", price: 12.00, qty: 0 },
+    acomp_farofa: { name: "Farofa Caseira", price: 5.00, qty: 0 },
+    acomp_arroz: { name: "Arroz Branquinho", price: 5.00, qty: 0 },
+    acomp_vinagrete: { name: "Vinagrete Fresco", price: 5.00, qty: 0 },
+    acomp_salpicao: { name: "Salpicão Cremoso", price: 7.00, qty: 0 }
+};
 
-        function updateQty(id, delta) {
+window.updateQty = function(id, delta) {
     if (items[id].qty + delta >= 0) {
         items[id].qty += delta;
-        // Corrigido com crases para a variável funcionar dentro das aspas
-        document.getElementById(qty-${id}).innerText = items[id].qty;
+        const elemento = document.getElementById(qty-${id});
+        if (elemento) {
+            elemento.innerText = items[id].qty;
+        }
         calculateTotal();
+    }
+};
+
+function calculateTotal() {
+    let total = 0;
+    for (let key in items) {
+        total += items[key].price * items[key].qty;
+    }
+    const totalElement = document.getElementById('total-price');
+    if (totalElement) {
+        totalElement.innerText = R$ ${total.toFixed(2).replace('.', ',')};
     }
 }
 
-        function calculateTotal() {
-            let total = 0;
-            for (let key in items) {
-                total += items[key].price * items[key].qty;
-            }
-            document.getElementById('total-price').innerText = R$ ${total.toFixed(2).replace('.', ',')};
+window.sendOrderWhatsApp = function() {
+    let selectedItems = [];
+    let total = 0;
+
+    for (let key in items) {
+        if (items[key].qty > 0) {
+            let subtotal = items[key].price * items[key].qty;
+            selectedItems.push(- ${items[key].qty}x ${items[key].name} (R$ ${subtotal.toFixed(2).replace('.', ',')}));
+            total += subtotal;
         }
+    }
 
-        function sendOrderWhatsApp() {
-            let selectedItems = [];
-            let total = 0;
+    if (selectedItems.length === 0) {
+        alert("Por favor, selecione ao menos um item no cardápio antes de enviar!");
+        return;
+    }
 
-            for (let key in items) {
-                if (items[key].qty > 0) {
-                    selectedItems.push(- ${items[key].qty}x ${items[key].name} (R$ ${(items[key].price * items[key].qty).toFixed(2).replace('.', ',')}));
-                    total += items[key].price * items[key].qty;
-                }
-            }
+    let message = *Olá, Showrrasquinho! Gostaria de fazer o seguinte pedido:*\n\n;
+    message += selectedItems.join('\n') + '\n\n';
+    message += *Total estimado:* R$ ${total.toFixed(2).replace('.', ',')}\n;
+    message += * Por favor, me informe a taxa de entrega e o tempo estimado!;
 
-            if (selectedItems.length === 0) {
-                alert("Por favor, selecione ao menos um item no cardápio antes de enviar!");
-                return;
-            }
-
-            let message = *Olá, Showrasquinho! Gostaria de fazer o seguinte pedido:*\n\n;
-            message += selectedItems.join('\n') + \n\n;
-            message += *Total estimado:* R$ ${total.toFixed(2).replace('.', ',')}\n\n;
-            message += Por favor, me informe a taxa de entrega e o tempo estimado!;
-
-            const encodedMessage = encodeURIComponent(message);
-            window.open(https://api.whatsapp.com/send?phone=5521971346487&text=${encodedMessage}, '_blank');
-        }
+    const encodedMessage = encodeURIComponent(message);
+    window.open(https://api.whatsapp.com/send?phone=5521971346497&text=${encodedMessage}, '_blank');
+};
     </script>
 </body>
