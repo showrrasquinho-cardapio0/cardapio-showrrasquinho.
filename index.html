@@ -257,12 +257,13 @@
         };
 
         function updateQty(id, delta) {
-            if (items[id].qty + delta >= 0) {
-                items[id].qty += delta;
-                document.getElementById(qty-${id}).innerText = items[id].qty;
-                calculateTotal();
-            }
-        }
+    if (items[id].qty + delta >= 0) {
+        items[id].qty += delta;
+        // Corrigido com crases para a variável funcionar dentro das aspas
+        document.getElementById(qty-${id}).innerText = items[id].qty;
+        calculateTotal();
+    }
+}
 
         function calculateTotal() {
             let total = 0;
@@ -294,7 +295,7 @@
             message += Por favor, me informe a taxa de entrega e o tempo estimado!;
 
             const encodedMessage = encodeURIComponent(message);
-            window.open(https://api.whatsapp.com/send?phone=5521971346497&text=${encodedMessage}, '_blank');
+            window.open(https://api.whatsapp.com/send?phone=5521971346487&text=${encodedMessage}, '_blank');
         }
     </script>
 </body>
